@@ -1,13 +1,13 @@
-# Capistrano::Pimcore
+# Capistrano::Pimcore5
 
-Pimcore plugin for capistrano
+Pimcore 5 plugin for capistrano
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-pimcore'
+gem 'capistrano-pimcore5'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install capistrano-pimcore
+    $ gem install capistrano-pimcore5
 
 ## Usage
 
@@ -26,7 +26,7 @@ Require capistrano-pimcore in your cap file
 
 ```
 # Capfile
-require 'capistrano-pimcore'
+require 'capistrano-pimcore5'
 ```
 
 ### Pimcore Specific Tasks
