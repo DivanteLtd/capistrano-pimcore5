@@ -1,17 +1,26 @@
 include Capistrano::Pimcore5::Helpers
 
 namespace :pimcore do # rubocop:disable Metrics/BlockLength
-  desc 'Reset Pimcore user password'
-  task :'reset-password' do
-    on release_roles :all do
-      within release_path do
-        raise 'Pleas set user name or id' unless ENV['user']
-        raise 'Pleas set password' unless ENV['pass']
+  namespace :user do
+    desc 'Reset Pimcore user password'
+    task :'reset-password' do
+      on release_roles :all do
+        within release_path do
+          raise 'Pleas set user name or id' unless ENV['user']
+          raise 'Pleas set password' unless ENV['pass']
 
-        user = ENV['user']
-        pass = ENV['pass']
+          user = ENV['user']
+          pass = ENV['pass']
 
-        execute :pimcore, "--environment=#{pimcore_environment}", 'reset-password', "-u#{user}", "-p#{pass}"
+          params = [
+            'pimcore:user:reset-password',
+            user.to_s,
+            "-p#{pass}"
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
+        end
       end
     end
   end
@@ -20,7 +29,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
   task :'classmap-generator' do
     on release_roles :all do
       within release_path do
-        execute :pimcore, "--environment=#{pimcore_environment}", 'classmap-generator'
+        params = [
+          'classmap-generator'
+        ]
+        params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+        execute :pimcore, params
       end
     end
   end
@@ -29,7 +43,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
   task :'mysql-tools' do
     on release_roles :all do
       within release_path do
-        execute :pimcore, "--environment=#{pimcore_environment}", 'mysql-tools'
+        params = [
+          'mysql-tools'
+        ]
+        params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+        execute :pimcore, params
       end
     end
   end
@@ -38,7 +57,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
   task :update do
     on release_roles :all do
       within release_path do
-        execute :pimcore, "--environment=#{pimcore_environment}", 'update'
+        params = [
+          'update'
+        ]
+        params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+        execute :pimcore, params
       end
     end
   end
@@ -47,7 +71,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
   task :'search-backend-reindex' do
     on release_roles :all do
       within release_path do
-        execute :pimcore, "--environment=#{pimcore_environment}", 'search-backend-reindex'
+        params = [
+          'search-backend-reindex'
+        ]
+        params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+        execute :pimcore, params
       end
     end
   end
@@ -57,7 +86,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
     task :clear do
       on release_roles :all do
         within release_path do
-          execute :pimcore, "--environment=#{pimcore_environment}", 'cache:clear'
+          params = [
+            'cache:clear'
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
         end
       end
     end
@@ -66,7 +100,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
       desc 'Warmup Pimcore cache storage'
       on release_roles :all do
         within release_path do
-          execute :pimcore, "--environment=#{pimcore_environment}", 'cache:warming'
+          params = [
+            'cache:warming'
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
         end
       end
     end
@@ -77,18 +116,29 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
     task :'classes-rebuild' do
       on release_roles :all do
         within release_path do
-          execute :pimcore, "--environment=#{pimcore_environment}", 'deployment:classes-rebuild --create-classes'
+          params = [
+            'deployment:classes-rebuild --create-classes'
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
         end
       end
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   namespace :thumbnails do
     desc 'Generate Pimcore image thumbnails'
     task :image do
       on release_roles :all do
         within release_path do
-          execute :pimcore, "--environment=#{pimcore_environment}", 'thumbnails:image'
+          params = [
+            'thumbnails:image'
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
         end
       end
     end
@@ -97,7 +147,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
     task :'optimize-images' do
       on release_roles :all do
         within release_path do
-          execute :pimcore, "--environment=#{pimcore_environment}", 'thumbnails:optimize-images'
+          params = [
+            'thumbnails:optimize-images'
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
         end
       end
     end
@@ -106,20 +161,29 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
     task :video do
       on release_roles :all do
         within release_path do
-          execute :pimcore, "--environment=#{pimcore_environment}", 'thumbnails:video'
+          params = [
+            'thumbnails:video'
+          ]
+          params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+          execute :pimcore, params
         end
       end
     end
   end
 
-  # rubocop:disable Metrics/BlockLength
   namespace :definition do
     namespace :import do
       desc 'Import Class definition from a JSON export'
       task :class do
         on release_roles :all do
           within release_path do
-            execute :pimcore, "--environment=#{pimcore_environment}", 'definition:import:class'
+            params = [
+              'cdefinition:import:class'
+            ]
+            params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+            execute :pimcore, params
           end
         end
       end
@@ -128,7 +192,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
       task :fieldcollection do
         on release_roles :all do
           within release_path do
-            execute :pimcore, "--environment=#{pimcore_environment}", 'definition:import:fieldcollection'
+            params = [
+              'definition:import:fieldcollection'
+            ]
+            params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+            execute :pimcore, params
           end
         end
       end
@@ -137,7 +206,12 @@ namespace :pimcore do # rubocop:disable Metrics/BlockLength
       task :objectbrick do
         on release_roles :all do
           within release_path do
-            execute :pimcore, "--environment=#{pimcore_environment}", 'definition:import:objectbrick'
+            params = [
+              'definition:import:objectbrick'
+            ]
+            params.push("--env=#{pimcore_environment}") unless pimcore_environment.empty?
+
+            execute :pimcore, params
           end
         end
       end

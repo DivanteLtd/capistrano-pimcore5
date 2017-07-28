@@ -1,4 +1,4 @@
-include Capistrano::Pimcore::Helpers
+include Capistrano::Pimcore5::Helpers
 
 namespace :deploy do
   task :updated do

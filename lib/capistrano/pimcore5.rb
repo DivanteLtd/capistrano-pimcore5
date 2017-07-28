@@ -1,6 +1,6 @@
 require 'capistrano/composer'
 
-SSHKit.config.command_map[:pimcore] = '/usr/bin/env php -f bin/console.php --'
+SSHKit.config.command_map[:pimcore] = '/usr/bin/env php -f bin/console --'
 
 module Capistrano
   module Pimcore5
