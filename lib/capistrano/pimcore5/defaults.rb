@@ -1,11 +1,14 @@
 set :env, 'development'
 
-set :linked_files, fetch(:linked_files, []).push
+set :linked_files, fetch(:linked_files, []).push(
+	'/var/config/system.php',
+	'/var/config/debug-mode.php',
+	'/var/config/maintenance.php',
+)
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'vendor',
   'var/classes/Object',
-  'var/config',
   'var/log',
   'var/recyclebin',
   'var/tmp',
