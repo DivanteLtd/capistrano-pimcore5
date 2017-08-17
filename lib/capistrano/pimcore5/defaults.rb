@@ -12,5 +12,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
   'var/log',
   'var/recyclebin',
   'var/tmp',
-  'var/versions'
+  'var/versions',
+  'web/var'
 )
