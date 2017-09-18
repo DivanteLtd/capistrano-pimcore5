@@ -1,4 +1,5 @@
 set :env, 'development'
+set :pimcore_deploy_classes_rebuild, fetch(:pimcore_deploy_classes_rebuild, true)
 
 set :linked_files, fetch(:linked_files, []).push(
 	'var/config/system.php',
