@@ -10,7 +10,7 @@ set :linked_files, fetch(:linked_files, []).push(
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'vendor',
-  'var/classes/Object',
+  'var/classes',
   'var/log',
   'var/recyclebin',
   'var/tmp',
