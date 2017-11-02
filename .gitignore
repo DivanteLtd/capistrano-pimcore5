@@ -7,4 +7,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+/vendor/
 capistrano-pimcore-*.gem
